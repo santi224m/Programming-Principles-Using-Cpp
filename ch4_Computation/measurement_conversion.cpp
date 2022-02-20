@@ -28,7 +28,7 @@ int main(void) {
       std::cout << length << "cm == " << length/cm_per_inch << "in\n";\
       break;
     default:
-      std::cout << "Sorry, I don't know a unit called " << unit << "\n";      //an else statement that runs if user enters bad input
+      std::cout << "Sorry, I don't know a unit called " << unit << "\n";
       break;
   }
 
