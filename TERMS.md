@@ -39,3 +39,7 @@
 * type safety - It can be safe or unsafe to convert from one type to another depending on how much space that types can hold
 * value - What is contained in a variable
 * variable - Used to hold a value of different types
+
+### Chapter 4
+* computation - To take an input and produce an output
+
