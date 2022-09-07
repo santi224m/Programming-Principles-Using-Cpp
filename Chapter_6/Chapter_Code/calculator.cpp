@@ -1,5 +1,15 @@
 #include "std_lib_facilities.h"
 
+class Token {
+  public:
+    char kind;
+    double value;
+};
+
+Token get_token();    // function to read a token from cin
+
+vector<Token> tok;    // we'll put tokens here
+
 int main()
 {
   cout << "Please enter expression (we can handle +, -, *, and /)\n";
