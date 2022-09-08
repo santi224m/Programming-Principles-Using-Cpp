@@ -1,5 +1,25 @@
 #include "std_lib_facilities.h"
 
+// expression grammar
+/*
+Expression:
+  Term
+  Expression "+" Term    // addition
+  Expression "-" Term    // subtraction
+Term:
+  Primary
+  Term "*" Primary    // multiplication
+  Term "/" Primary    // division
+  Term "%" Primary    // remainder (modulo)
+Primary:
+  Number
+  "(" Expression ")"    // grouping
+Number
+  floating-point-literal
+*/
+
+
+
 class Token {
   public:
     char kind;
