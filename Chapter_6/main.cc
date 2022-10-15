@@ -1,4 +1,6 @@
-#include "std_lib_facilities.h"
+#include <iostream>
+#include <stdexcept>
+#include <vector>
 
 #include "token.h"
 #include "grammar.h"
@@ -12,11 +14,11 @@ int main()
   int lval = 0;
   int rval;
   std::cin >> lval;    // read leftmost operand
-  if (!std::cin) error("no first operand");
-  for (char op; std::cin >> op;) {   // read operator and right-hand operator
+  if (!std::cin) throw std::runtime_error("no first operand");
 
+  for (char op; std::cin >> op;) {   // read operator and right-hand operator
     if (op != 'x') std::cin >> rval;
-    if (!std::cin) error("no second operand");
+    if (!std::cin) throw std::runtime_error("no second operand");
     switch(op) {
       case '+':
         lval += rval;
@@ -31,9 +33,9 @@ int main()
         lval /= rval;
         break;
       default:    // not another operator, print result
-        cout << "Result: " << lval << '\n';
+        std::cout << "Result: " << lval << '\n';
         return 0;
     }
   }
-  error("bad expression");
+  throw std::runtime_error("bad expression");
 }
