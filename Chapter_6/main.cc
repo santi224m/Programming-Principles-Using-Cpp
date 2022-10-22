@@ -16,7 +16,7 @@ int main()
   std::cin >> lval;    // read leftmost operand
   if (!std::cin) throw std::runtime_error("no first operand");
 
-  for (char op; std::cin >> op;) {   // read operator and right-hand operator
+  for (char op; std::cin >> op;) {   // read operator and right-hand operand
     if (op != 'x') std::cin >> rval;
     if (!std::cin) throw std::runtime_error("no second operand");
     switch(op) {
