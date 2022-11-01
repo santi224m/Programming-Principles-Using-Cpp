@@ -1,4 +1,4 @@
-#include <cctype>
+  #include <cctype>
 #include <fstream>
 #include <ios>
 #include <iostream>
@@ -28,22 +28,21 @@ int get_int() {
   }
 }
 
-int get_int(int low, int high) {
-  std::cout << "Please enter an integer in the range " << low << " to " << high
-            << " (inclusive):\n";
+int get_int(int low, int high, const std::string& greeting, const std::string& sorry) {
+  std::cout << greeting << low << " : " << high << '\n';
   while (true) {
     int n = get_int();
     if (n >= low && n <= high) return n;
-    std::cout << "Sorry, " << n << " is not in the [" << low << ":" << high
-              << "] range; please try again\n";
+    std::cout << sorry << ": [" << low << ":" << high
+              << "]\n";
   }
 }
 
 int main() {
-  int n = get_int(1,10);
+  int n = get_int(1,10, "Please enter an integer in the range ", "Sorry, the value entered is out of range");
   std::cout << "Double of " << n << " is: " << n * 2 << std::endl;
 
-  int m = get_int(0,100);
+  int m = get_int(0,100, "Please enter an integer in the range ", "Sorry, the value entered is out of range");
   std::cout << "Half of " << m << " is: " << m / 2 << std::endl;
 
   return 0;
