@@ -180,26 +180,25 @@
 * valid state -
 
 ### Chapter 10 - Input and Output Streams
-bad()
-* buffer -
-* clear() -
-* close() -
-* device driver -
-* eof() -
-* fail() -
-* file -
-* good() -
-* ifstream -
-* input device -
-* input operator -
-* iostream -
-* istream -
-* ofstream -
-* open() -
-* ostream -
-* ouput device -
-* ouput operator -
-* stream state -
-* structured file -
-* terminator -
-* unget()*  -
+* bad() - Checks if stream is in a bad state, which means it can't recover
+* buffer - Used to temporarily store data while it is being transferred to another place
+* clear() - sets the stream state back to good()
+* close() - closes an input or output stream
+* device driver - Allows programs to connect to different input and output sources
+* eof() - Indicates end of file.
+* fail() - Something unexpected happened in the stream
+* good() - Operation succeeded
+* ifstream - an input file stream
+* input device - used to input data into the program
+* input operator - ">>"
+* iostream - In the Standard Library, used to handle input and output 
+* istream - input stream
+* ofstream - output file stream
+* open() - used to open a stream
+* ostream - output stream
+* ouput device - used to display output from the program
+* ouput operator - "<<"
+* stream state - the stream can be in four states: good(), eof(), fail(), bad()
+* structured file - a file that is structured in a certain way so that its data can be easily read by a program
+* terminator - a character used to signal the program to stop
+* unget() - returns the last character to the input stream
