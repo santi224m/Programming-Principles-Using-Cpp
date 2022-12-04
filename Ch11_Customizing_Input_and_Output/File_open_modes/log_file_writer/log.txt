@@ -1,0 +1,4 @@
+First line in log
+Changed program to append
+Program is appending new entries to log.txt file and working correctly
+final test
