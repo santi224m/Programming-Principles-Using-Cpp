@@ -62,3 +62,5 @@ int* ptr = &var;  // prt is assigned the memory address of var
   * You can't assign a pointer to int type to a pointer to char type
 * This protection is put in place because if you were to assign a type of bigger size to a type of smaller size, then it would overwrite data stored in the address next to the type you are writing too. This would cause many errors that would be hard to debug
 * We should try to work at the highest level of abstraction possible for the problem that we are trying to solve. This will reduce that amount of errors in our code
+* You can use the sizeof operator to see how much memory a datatype takes up
+* sizeof reports in bytes
