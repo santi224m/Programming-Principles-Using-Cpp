@@ -64,3 +64,34 @@ int* ptr = &var;  // prt is assigned the memory address of var
 * We should try to work at the highest level of abstraction possible for the problem that we are trying to solve. This will reduce that amount of errors in our code
 * You can use the sizeof operator to see how much memory a datatype takes up
 * sizeof reports in bytes
+
+## Free Store and Pointers
+
+* When you start a c++ program, the compiler sets aside memory for your code (Code Storage)
+* It also sets aside memory for the global variables (Static Storage)
+* It also sets aside memory for your functions and their variables (Stack Storage)
+* The rest of the  memory is free for any program to use
+* This free store is also called heap
+* You can access the free store with the **new** keyword
+* The **new** operator returns a pointer to the object it creates
+* If the **new** operator creates several objects, the pointer will point to the first object in memory
+* The pointer does not know how many objects it is pointing to
+* You can use a variable to set the size of an array that the **new** operator creates
+  ```
+  double* qd = new double[n];  // allocate n doubles (array of n doubles)
+  ```
+* Pointers can only be assigned to their same type in order to prevent type errors
+
+### Access through pointers
+
+* You can also use the subscript operator ([]) to dereference a pointer\
+  For example:
+  ```
+  int* nums = int[5];  // Pointer to an array of 5 ints
+  int p = *nums;  // Assigns the value of the first int in the nums array to p
+  int q = nums[3] // Assigns the value of the 4th int in the nums array to q
+  nums[4] = 22;  // Assigns 22 to the 5th int in the nums array
+  ```
+* the [ ] operator treats memory as a sequence of objects of the same type
+
+### Ranges
