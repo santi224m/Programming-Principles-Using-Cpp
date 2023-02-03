@@ -95,3 +95,26 @@ int* ptr = &var;  // prt is assigned the memory address of var
 * the [ ] operator treats memory as a sequence of objects of the same type
 
 ### Ranges
+
+* A pointer doesn't know how many elements it points to
+* If you try to access an object with the subscript notation at an index that it doesn't have, there will be no error. You will simply get whatever is that many bytes away from the pointer
+* Out-of-range access is bad because it allows us to read and write to parts of memory that we are not meant to access
+* Errors caused by out-of-range-access can be hard to debug because they can affect areas unrelated to the code and it can cause different errors every time we run the program
+* One of the reasons we should use a vector rather than directly accessing memory is that a vector knows its size, so we can avoid out-of-range access
+* Assigning a pointer to a type to another pointer to a type can lead to out-of-range access if one pointer is of different size than the other pointer
+* Understanding pointers is essential for understanding real-world code
+
+### Initialization
+
+* We want to make sure that the objects that our pointers point to have been initialized, otherwise we could try to access them when they don't exist
+  ```
+  double* p0; // uninitialized, the object at this location could be anything
+  ```
+* Memory allocated by **new** is not initialized
+* We can initialize these objects with the {} notation
+  ```
+  double* p1 = new double[3]{0,1,2};
+  double* p2 = new double[]{3,4,5,6,7,8};
+  ```
+  * You can ommit the array length in the [ ] when you initialize the object with the {}
+* We don't have to worry about initializing with user-defined types that have default constructors
