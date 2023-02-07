@@ -8,9 +8,9 @@
 * The only thing hardware supports is sequences of bytes
 * When you are running operations on the container such as the push_back() function, at the low level, the computer is only reading and writing a few bytes at a time
 * The c++ standard library provides us with facilities, or algorithms, which saves us from having to program common tasks
-* In order to implement our own version of a vector, we must deal with directly with memory
+* In order to implement our own version of a vector, we must deal directly with memory
 * Containers are designed to allows us to manipulate data without having to deal with memory at a low level
-* It is important to know who to manage memory at a low level so that you can implement your own containers, be able to read c and c++ code that directly uses memory, and pointers are sometimes necessary when programming in c++
+* It is important to know how to manage memory at a low level so that you can implement your own containers, be able to read c and c++ code that directly uses memory, and pointers are sometimes necessary when programming in c++
 * Understanind how a program maps to memory will make it easier to grasp higher-level topics, such as data structures, algorithms, and operating systems
 
 ## Vector Basics
@@ -32,7 +32,7 @@
   * This would be a problem because we wouldn't be able to add more elements than the fixed size
 * To solve this problem, we need to use a pointer so that every time we need to change the size of the elements we are storing, we can point to a different container with a larger size
 * **Pointer** - A data type that can hold a memory address
-* To use a pointer we must add an asterisks to the end of the data type we are pointing to. For example the following code is a pointer to a double
+* To use a pointer we must add an asterisk to the end of the data type we are pointing to. For example the following code is a pointer to a double
 ```
 double*
 ```
@@ -43,7 +43,7 @@ double*
 * The bytes can be numbered from 0 to the last one
 * A number that indicates the location in memory is called an address
 * Everything we put in memory has an address
-* We can store an manipulate addresses using pointers
+* We can store and manipulate addresses using pointers
 * The "address of" operator (&) is used to get the address of an object
 ```
 int var = 20;
@@ -51,7 +51,7 @@ int* ptr = &var;  // prt is assigned the memory address of var
 ```
 * each type has a corresponding pointer type
 * The "contents of" operator, aka dereference operator, (*) is used to see the value of the object that is being pointed at
-* Hexadecimal notation if often used when displaying memory addresses
+* Hexadecimal notation is often used when displaying memory addresses
 * The dereference operator can be used on the left hand side of an assignment to change the value of the object that is being pointed at
 ```
 *num = 6;  // Changes the value of the object being pointed to
@@ -59,11 +59,11 @@ int* ptr = &var;  // prt is assigned the memory address of var
 * Pointers are not integers. You can't do arithmetic on them like how you can with integers
 * You can't assign other types to a pointer except for a pointer of the same type
   * You can't assign an int to a pointer variable
-  * You can't assign a pointer to int type to a pointer to char type
+  * You can't assign a **pointer-to-int** type to a **pointer-to-char** type
 * This protection is put in place because if you were to assign a type of bigger size to a type of smaller size, then it would overwrite data stored in the address next to the type you are writing too. This would cause many errors that would be hard to debug
 * We should try to work at the highest level of abstraction possible for the problem that we are trying to solve. This will reduce that amount of errors in our code
-* You can use the sizeof operator to see how much memory a datatype takes up
-* sizeof reports in bytes
+* You can use the sizeof operator to see how much memory a data type takes up
+* **sizeof** reports in bytes
 
 ## Free Store and Pointers
 
@@ -84,7 +84,7 @@ int* ptr = &var;  // prt is assigned the memory address of var
 
 ### Access through pointers
 
-* You can also use the subscript operator ([]) to dereference a pointer\
+* You can also use the subscript operator (**[ ]**) to dereference a pointer\
   For example:
   ```
   int* nums = int[5];  // Pointer to an array of 5 ints
@@ -92,7 +92,7 @@ int* ptr = &var;  // prt is assigned the memory address of var
   int q = nums[3] // Assigns the value of the 4th int in the nums array to q
   nums[4] = 22;  // Assigns 22 to the 5th int in the nums array
   ```
-* the [ ] operator treats memory as a sequence of objects of the same type
+* the **[ ]** operator treats memory as a sequence of objects of the same type
 
 ### Ranges
 
@@ -101,7 +101,7 @@ int* ptr = &var;  // prt is assigned the memory address of var
 * Out-of-range access is bad because it allows us to read and write to parts of memory that we are not meant to access
 * Errors caused by out-of-range-access can be hard to debug because they can affect areas unrelated to the code and it can cause different errors every time we run the program
 * One of the reasons we should use a vector rather than directly accessing memory is that a vector knows its size, so we can avoid out-of-range access
-* Assigning a pointer to a type to another pointer to a type can lead to out-of-range access if one pointer is of different size than the other pointer
+* Assigning a **pointer-to-a-type** to different **pointer-to-a-type** can lead to out-of-range access if one pointer is of different size than the other pointer
 * Understanding pointers is essential for understanding real-world code
 
 ### Initialization
@@ -111,10 +111,10 @@ int* ptr = &var;  // prt is assigned the memory address of var
   double* p0; // uninitialized, the object at this location could be anything
   ```
 * Memory allocated by **new** is not initialized
-* We can initialize these objects with the {} notation
+* We can initialize these objects with the **{ }** notation
   ```
   double* p1 = new double[3]{0,1,2};
   double* p2 = new double[]{3,4,5,6,7,8};
   ```
-  * You can ommit the array length in the [ ] when you initialize the object with the {}
+  * You can ommit the array length in the **[ ]** when you initialize the object with the **{ }**
 * We don't have to worry about initializing with user-defined types that have default constructors
