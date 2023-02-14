@@ -118,3 +118,83 @@ int* ptr = &var;  // prt is assigned the memory address of var
   ```
   * You can ommit the array length in the **[ ]** when you initialize the object with the **{ }**
 * We don't have to worry about initializing with user-defined types that have default constructors
+* Compilers often have a debug mode where all uninitialized objects are set to 0. This can be a problem because the program may not cause an error when running in debug mode, but will once it is compiled for production
+
+### The Null Pointer
+
+* When we don't have a pointer to intilialize a pointer with, we should set it equal to ```nullptr```
+* This allows us to check if a pointer is valid with an if statement
+```cpp
+int* ptr0 = nullptr;
+if (ptr0) {  // equivalent to ptr0 != nullptr
+  // do something
+}
+```
+* Once we delete the object in a pointer, we should set the pointer equal to ```nullptr``` so that it has no memory address. Otherwise, when we run the if statement it will pass since it will have a memory address to something random
+* The ```nullptr``` keyword is new in C++11, so older code might use 0 or ```NULL``` instead
+* Prefer to use ```nullptr``` since it is more specific
+
+## Free-store deallocation
+
+* Since memory is limited, we should return memory that we take from free-store once we are done using it
+  * This is essential for long-running programs
+```cpp
+double* calc(int res_size, int max) {
+  double* p = new double[max];
+  double* res = new double[res_size];
+  // we should've deleted p here since it won't be used anymore
+  return res;
+}
+
+double* r = calc(100,1000);
+// use r somewhere
+// we should have deleted r here since it won't be used anymore
+```
+* In the program above, every call to ```calc()``` leaks memory since we never delete the pointers we use
+* The call ```calc(100,1000)``` will take up ```8 bytes per double * 1000 doubles = 8000 bytes```
+* The ```delete``` operator is used to return memory to the free store
+* We use ```delete``` on pointers returned by the ```new``` keyword to make that memory available in the free store again
+* **delete p** frees the memory of an individual object
+* **delete[] p** frees the memory of an array
+* The programmer has to decide which version of delete is the appropriate one for each case
+* You will recieve an error if you try to delete a pointer more than once. There are two problems with trying to delete a pointer more than once:
+  * The pointer may belong to the free-store manager, so you don't have access to that location anymore and you will recieve an error
+  * The free-store manager could have assigned that address to a different pointer in the program and you will be deleting something unrelated to what you think you are deleting
+* Deleting a ```nullptr``` doesn't do anything, it is harmless
+* It is possible for compilers to free memory for you when you no longer need it. This is called *automatic garbage collection*
+* Automatic Garbage Collection comes with a performance cost, so it is sometimes better to manage memory manually
+* It is most important to not leak memory in programs that will run forever
+  * The memory leaked will never be freed
+  * This includes operating systems and embedded system
+  * Libraries should also not leak since they could be used by others that can't afford to leak memory in their programs
+* Even when you know that a memory leak will not cause huge problems, it is still better to deal with them so as to not appear sloppy
+
+## Destructors
+
+* A destructor is the opposite of a constructor
+* It runs when an object goes out of scope
+* The purpose of a destructor is to make sure that an object is properly cleaned up before it is destroyed
+* If we didn't have destructors, for each object that used the free store, we would have to create member functions who would delete all the pointers in use and we would have to rely on the user of the object to run the member function when they were done using it
+* Here is an example of a destructor that we would use in our vector class:
+```cpp
+class vector {
+  // other code
+
+  ~vector() {
+    delete[] elem;
+  }
+}
+```
+
+* The reason to use vectors over arrays is that a vector's destructor runs automatically when it goes out of scope, while for an array, the user has to use the ```delete[]``` operator
+* Having to use the ```delete[]``` operator opens the door to problems since the programmer can forget to include it
+* Destructors are great for handling resources that have to be aquired and then returned
+  * This includes files, threads, locks
+  * This is how iostreams clean up after themselves
+* If a member of an object has a destructor, that destructor will be called when the object is destroyed
+* The basic idea of constructors and destructors is this:
+  * A class object acquires the resources it needs to function in the constructor
+  * During its lifetime, the object can aquire new resources and delete ones it doesn't need anymore
+  * At the end of its lifetime, the destructor deletes all the remaining resources that the object still has
+* When you have a class with a virtual function, it usually needs a virtual destructor
+* Destructors are called with the ```delete``` operator instead of being called directly
