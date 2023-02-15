@@ -235,3 +235,23 @@ double d = p->get(3);
 * A ```static_cast``` can be used to explicitly convert between related pointer types
   * Use it only when necessary
 * The ```static_cast``` is an *explicit type conversion*, or *cast*
+* Whenever you use a cast, see if there is a better way without using one
+* There is usually a way to rewrite code without a cast unless you are interfacing to other people's code or to hardware
+
+## Pointers and references
+
+* A reference can be thought of as an automatically dereferenced immutable pointer
+* Pointers and references differ in these ways:
+  * An assignment to a pointer changes the pointer's value, while assignment to a reference changes the value of the object referred to
+  * To get a pointer you need ```new``` or ```&```
+  * To access an object pointed to by a pointer you need ```*``` and ```&```
+  * You cannot change the object that a reference refers to once it has been initialized
+  * Assignment of references assign to the referred-to object, while assignment to pointers assigns to the pointer object itself
+* To assign an object as a reference, you use the ```&``` operator on the type instead of in the initializer like with a pointer
+```cpp
+int y = 10;
+int& r = y;  // r is a reference to y
+r = 7;  // y and r are now equal to 7 since they point to the same thing
+```
+* If you need to change the what is being pointed to, you should use a pointer rather than a reference
+* Pointers and references both use memory addresses, but they use them in different ways to allow you to do different things
