@@ -198,3 +198,40 @@ class vector {
   * At the end of its lifetime, the destructor deletes all the remaining resources that the object still has
 * When you have a class with a virtual function, it usually needs a virtual destructor
 * Destructors are called with the ```delete``` operator instead of being called directly
+
+## Pointers to class objects
+
+* We can create pointer to anything that can have a memory address, including objects
+* When we create a pointer to our vector object, the ```new``` operator does the following:
+  1. Allocates memory for a vector
+  2. Invokes the vector's constructor, which then allocates memory for its elements and initializes them
+* The ```delete``` operator does the following when we call it on our vector class
+  1. Invokes the vector's destructor. The vector destructor invokes the destructor for the elements. Finally, it deallocates the memory used by the elements
+  2. Once it is done deallocating the memory for the elements, it deallocates the memory used for the vector
+* Because ```delete``` invokes destructors, it is often used to destroy objects rather than just deallocate them
+* Try to keep ```new```s in constructors and ```delete```s in destructors to avoid forgetting to deallocate objects
+* To access the members of our vector given only a pointer, we use the arrow (->) operator
+```cpp
+vector* p = new vector(4);
+int x = p->size();
+double d = p->get(3);
+```
+* The arrow operator can be used for both accessing data members and function members
+* Arrow doesn't apply to built-in types since they don't have members
+* Dot (.) and arrow (->) are often called **member access operators**
+
+## Messing with types: void* and casts
+* We are working very close to hardware when using pointers and free-store-allocated arrays
+* Sometimes we have to use pointers that don't offer type safety
+  * This should be avoided whenever possible, but may be necessary in certain cases like when working with other languages that don't understand C++'s types
+* To be able to work with pointers without type safety, we need two things
+  * A type of pointer that points to memory without knowing what type of memory is at that address
+  * An operation to tell the compiler what kind of type to assume for those pointers
+* The ```void*``` type means "pointer to some memory that the compiler doesn't know the type of"
+* We use the ```void*``` type when we want to transmit an address between pieces of code that don't know each others types
+* There are no objects of type ```void```, but we use it to indicate that a function will not return anything
+* A pointer of any type can be assigned to a ```void*```
+* We have to tell the compiler what a ```void*``` points to since it doesn't know
+* A ```static_cast``` can be used to explicitly convert between related pointer types
+  * Use it only when necessary
+* The ```static_cast``` is an *explicit type conversion*, or *cast*
