@@ -253,5 +253,65 @@ int y = 10;
 int& r = y;  // r is a reference to y
 r = 7;  // y and r are now equal to 7 since they point to the same thing
 ```
-* If you need to change the what is being pointed to, you should use a pointer rather than a reference
+* If you need to change what is being pointed to, you should use a pointer rather than a reference
 * Pointers and references both use memory addresses, but they use them in different ways to allow you to do different things
+
+## Pointer and reference parameters
+* There are three ways to change the value of a variable to a value computed by a function
+  * Returning the value from the function
+  * Passing the variable as a pointer
+  * Passing the variable as a reference
+```cpp
+int increment1(int x) { return x+1; }
+void increment2(int* p) { ++*p; };
+void increment3(int& r) { ++r; };
+```
+* You should prefer to use the return-from-function- method for small objects like ints and doubles because it is more obvious and leads to less errrors
+  * We could also use this method for large objects that have a move method
+* Both pass-by-pointer and pass-by-reference have their benifts and drawbacks
+* When you pass-by-pointer, the user knows that the variable could be changed since they have to include the ```&``` operator in the argument. With pass-by-reference, there is a possibility that the programmer does not know they are passing by reference since it looks the same as passing a regular argument
+```cpp
+int x = 7;
+increment2(&x);  // pass-by-pointer
+increment3(x);  // pass-by-reference
+```
+* One drawback of pass-by-pointer is that someone could pass ```nullptr``` as the argument, causing a program crash when the program tries to dereference the pointer
+* This can be prevented by checking if the pointer is equal to ```nullptr``` in the function
+* With a pass-by-reference fucntion, one can always assume that the argument passed in will always be assigned a value
+* When deciding how an agrument should be passed into a function, use these guidlines:
+  * For tiby objects, prefer pass-by-value
+  * For functions where passing in no object (```nullptr```) is allowed, use pass-by-pointer, but make sure to test if the value is ```nullptr```
+  * For all other cases, use pass-by-reference
+  
+## Example: Lists
+* Lists are one of the most common data structures
+* Usually, lists are made out of links which hold data and pointers to other links
+* Below is an example of a doubly-linked list
+  * Each Link has a string value, a pointer to the previous Link ```prev```, and a pointer to the next Link ```succ```
+  * The list consists of three Links:
+    * ```nullptr <- "X 100pre" <--> "YHLQMDLG" <--> "Un Verano Sin Ti" -> nullptr```
+  * It also has a Link pointer ```Albums```, which points to the first Link in the list
+* This is a doubly-linked list because each link points to a previous link and a successor link
+```cpp
+#include <iostream>
+#include <string>
+
+struct Link {
+    std::string value;
+    Link* prev;
+    Link* succ;
+    Link(const std::string& v, Link* p = nullptr, Link* s = nullptr)
+          : value(v), prev(p), succ(s) {}
+};
+
+int main()
+{
+    Link* Albums = new Link("Un Verano Sin Ti", nullptr, nullptr);
+    Albums = new Link("YHLQMDLG", nullptr, Albums);
+    Albums->succ->prev = Albums;  // set prev of "Un Verano Sin Ti" to "YHLQMDLG"
+    Albums = new Link("X 100pre", nullptr, Albums);
+    Albums->succ->prev = Albums;  // set prev of "YHLQMDLG" to "X 100pre"
+    
+    return 0;
+}
+```
