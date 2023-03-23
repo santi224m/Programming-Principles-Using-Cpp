@@ -297,21 +297,58 @@ increment3(x);  // pass-by-reference
 #include <string>
 
 struct Link {
-    std::string value;
-    Link* prev;
-    Link* succ;
-    Link(const std::string& v, Link* p = nullptr, Link* s = nullptr)
-          : value(v), prev(p), succ(s) {}
+  std::string value;
+  Link* prev;
+  Link* next;
+  Link(const std::string& str, Link* p = nullptr, Link* n = nullptr)
+      : value(str), prev(p), next(n) {}
 };
+
+// Insert newLink before existingLink
+Link* insert(Link *existingLink, Link* newLink) {
+  if (existingLink == nullptr) return newLink;
+  if (newLink == nullptr) return existingLink;
+  newLink->next = existingLink;
+  if (existingLink->prev)
+    existingLink->prev->next = newLink;
+  newLink->prev = existingLink->prev;
+  existingLink->prev = newLink;
+  return newLink;
+}
 
 int main()
 {
+    // Use Links without insert function
     Link* Albums = new Link("Un Verano Sin Ti", nullptr, nullptr);
     Albums = new Link("YHLQMDLG", nullptr, Albums);
-    Albums->succ->prev = Albums;  // set prev of "Un Verano Sin Ti" to "YHLQMDLG"
+    Albums->next->prev = Albums;  // set prev of "Un Verano Sin Ti" to "YHLQMDLG"
     Albums = new Link("X 100pre", nullptr, Albums);
-    Albums->succ->prev = Albums;  // set prev of "YHLQMDLG" to "X 100pre"
+    Albums->next->prev = Albums;  // set prev of "YHLQMDLG" to "X 100pre"
+    
+    // Links using insert function
+    Link *Albums2 = new Link("Un Verano Sin Ti");
+    Albums2 = insert(Albums2, new Link("YHLQMDLG"));
+    Albums2 = insert(Albums2, new Link("X 100pre"));
+    Link* itr = Albums2;
+    while (itr) {
+      std::cout << itr->value << std::endl;
+      itr = itr->next;
+    }
     
     return 0;
 }
 ```
+* Pointer manipulation is tricky and should be handled by well tested functions
+* In an actual Doubly Linked List class, there should be methods that handle the insertion and removal of nodes into the list
+* Here are some operation that a List class should support so that the users don't have to modify pointers themselves
+  * Constructor
+  * ```insert()``` - inserts an element before an another element in the list
+  * ```add()``` - insert an element after another element in the list
+  * ```erase()``` - remove an element
+  * ```find()``` - find a Link with a given value
+  * ```advance()``` - get the nth successor
+  
+## The **This** Pointer
+* In every member function, the ``this`` identifier is a pointer that points to the object for which the member function was called
+* The ```this``` identifier is the only way that we can get a pointer to the object form within the member function
+* You cannot change the value of ```this``` within a member function; ```this``` is immutable
